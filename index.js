@@ -9,10 +9,11 @@ const db = require("./models/"); //index
 const role = db.Role;
 
 //Dev Mode
+/*
 db.sequelize.sync({ force: true }).then(() => {
   initRole();
   console.log("Drop and Sync Database");
-});
+});*/
 
 const initRole = () => {
   role.create({ id: 1, name: "user" });

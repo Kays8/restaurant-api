@@ -5,6 +5,7 @@ const Role = db.Role;
 const jwt = require("jsonwebtoken"); // npm i jsonwebtoken
 const bcrypt = require("bcryptjs"); // npm i bcryptjs
 const { Op } = require("sequelize");
+const { route } = require("../routers/auth.router");
 
 //Register a new user
 exports.signup = async (req, res) => {
@@ -53,4 +54,58 @@ exports.signup = async (req, res) => {
           error.message || "Something error occured while creating the user.",
       });
     });
+};
+
+//update 18/07/2567
+//Signin
+exports.signin = async (req, res) => {
+  const { username, password } = req.body;
+  if (!username && !password) {
+    res.status(400).send({
+      message: "Please provide al required fields",
+    });
+    return;
+  }
+
+  //SELECT * FROM User where username = "username"
+  await User.findOne({
+    where: { username: username },
+  }).then((user) => {
+    if (!user) {
+      return res.status(404).send({ message: "User not found." });
+    }
+    // เอา password ไปทำการ Hash
+    const passwordIsValid = bcrypt.compareSync(password, user.password);
+    if (!passwordIsValid) {
+      return res.status(401).send({
+        accessToken: null,
+        message: "Invalid password!",
+      });
+    }
+    //ถ้าผ่านจะเข้าขั้นตอน jwt
+    const token = jwt.sign({ id: user.username }, config.secret, {
+      expiresIn: 86400, // 24Hours
+    });
+    const authorities = [];
+    user
+      .getRoles()
+      .then((roles) => {
+        for (let i = 0; i < roles.length; i++) {
+          authorities.push("ROLES_" + roles[i].name.toUpperCase());
+        }
+        res.status(200).send({
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          rolse: authorities,
+          accessToken: token,
+        });
+      })
+      .catch((error) => {
+        res.status(500).send({
+          message:
+            error.message || "Something error occured while creating the user.",
+        });
+      });
+  });
 };
