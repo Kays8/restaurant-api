@@ -1,4 +1,4 @@
-const { AsyncQueueError } = require("sequelize");
+const { where } = require("sequelize");
 const Restaurant = require("../models/restaurant.model"); //ต้อง import >> (../models/restaurant.model)
 
 //Create and Save a new restaurant

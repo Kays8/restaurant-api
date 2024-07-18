@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const restaurantController = require("../controlloer/restaurant.controller");
+const restaurantController = require("../controllers/restaurant.controller");
 
 //Create a restaurant
 //PORT http://localhost:5000/api/v1/restaurants/
