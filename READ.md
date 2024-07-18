@@ -21,3 +21,12 @@ acquire: 30000,
 idle: 10000,
 },
 };
+
+// http://localhost:5000/api/v1/auth/signup
+{
+"username": "J4",
+"email":"J4@gmail.com",
+"password": "123456",
+"roles": ["admin", "user"]
+
+}

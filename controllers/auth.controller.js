@@ -77,7 +77,7 @@ exports.signin = async (req, res) => {
     // เอา password ไปทำการ Hash
     const passwordIsValid = bcrypt.compareSync(password, user.password);
     if (!passwordIsValid) {
-      return res.status(401).send({
+      res.status(401).send({
         accessToken: null,
         message: "Invalid password!",
       });
