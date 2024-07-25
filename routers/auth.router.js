@@ -12,13 +12,16 @@ router.use((req, res, next) => {
   next();
 });
 //Auth
-//PORT http://localhost:5000/api/v1/signup/
+
+//PORT =>  localhost:5000/api/v1/auth/signin/
+
 router.post(
   "/signup",
   [verifySignUp.checkDuplicateUsernameOrEmail, verifySignUp.checkRoleExisted],
   authController.signup
 );
 
-router.post("/signin", authController.signin);
+//localhost:5000/api/v1/signin/
+http: router.post("/signin", authController.signin);
 
 module.exports = router;
