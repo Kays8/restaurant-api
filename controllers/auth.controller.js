@@ -87,7 +87,9 @@ exports.signin = async (req, res) => {
       expiresIn: 86400, // 24Hours
     });
     const authorities = [];
-    user.getRoles().then((roles) => {
+    user
+      .getRoles()
+      .then((roles) => {
         for (let i = 0; i < roles.length; i++) {
           authorities.push("ROLES_" + roles[i].name.toUpperCase());
         }
@@ -95,7 +97,7 @@ exports.signin = async (req, res) => {
           id: user.id,
           username: user.username,
           email: user.email,
-          rolse: authorities,
+          roles: authorities,
           accessToken: token,
         });
       })

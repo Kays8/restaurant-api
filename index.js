@@ -7,6 +7,11 @@ const restaurantRouter = require("./routers/restaurant.router");
 const authRouter = require("./routers/auth.router");
 const db = require("./models/"); //index
 const role = db.Role;
+const cors = require("cors");
+
+const coreOption = {
+  origin: "http://localhost:5173",
+};
 
 //Dev Mode
 /*
@@ -22,6 +27,7 @@ const initRole = () => {
 };
 
 //use Middleware
+app.use(cors(coreOption)); //cors
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
