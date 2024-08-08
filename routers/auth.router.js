@@ -13,7 +13,7 @@ router.use((req, res, next) => {
 });
 //Auth
 
-//PORT =>  localhost:5000/api/v1/auth/signin/
+//PORT =>  http://localhost:5000/api/v1/auth/signin/
 
 router.post(
   "/signup",
