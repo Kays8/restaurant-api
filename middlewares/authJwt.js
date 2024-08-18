@@ -5,9 +5,10 @@ const config = require("../config/auth.config");
 const db = require("../models");
 const User = db.User;
 
+
 //verify token
 verifyToken = (req, res, next) => {
-  let token = req.header["x-access-token"]; //นำมาจาก auth.router.js
+  let token = req.headers["x-access-token"]; //นำมาจาก auth.router.js
   // 1st Verify ไม่รู้ว่า User Token เป็นใครและสามารถเข้าถึงได้
   if (!token) {
     return res.status(403).send({
@@ -30,7 +31,7 @@ verifyToken = (req, res, next) => {
 
 //* isAdmin? ใช้ loop เพื่อเช็คว่า user เป็น admin มั้ย?
 isAdmin = (req, res, next) => {
-  User.findByPK(req.userId).then((user) => {
+  User.findByPk(req.userId).then((user) => {
     user.getRoles().then((roles) => {
       for (let i = 0; i < roles.length; i++) {
         if (roles[i].name === "admin") {
@@ -47,7 +48,7 @@ isAdmin = (req, res, next) => {
 
 //* isMod?
 isMod = (req, res, next) => {
-  User.findByPK(req.userId).then((user) => {
+  User.findByPk(req.userId).then((user) => {
     user.getRoles().then((roles) => {
       for (let i = 0; i < roles.length; i++) {
         if (roles[i].name === "moderator") {
@@ -64,7 +65,7 @@ isMod = (req, res, next) => {
 
 //* isAdminOrMod?
 isModOrAdmin = (req, res, next) => {
-  User.findByPK(req.userId).then((user) => {
+  User.findByPk(req.userId).then((user) => {
     user.getRoles().then((roles) => {
       for (let i = 0; i < roles.length; i++) {
         if (roles[i].name === "moderator" || roles[i].name === "admin") {
